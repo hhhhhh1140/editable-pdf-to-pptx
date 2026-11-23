@@ -48,6 +48,10 @@ def raster_fixture(path):
     draw.rounded_rectangle((60,228,560,597),radius=20,fill="#E3F1FA",outline="#438BC0",width=3)
     face=ImageFont.truetype(str(FONT_PATH),55)
     draw.text((87,88),"中文测试 PowerPoint",font=face,fill="white")
+    heading=ImageFont.truetype(str(FONT_PATH),36)
+    heading.set_variation_by_axes([700])
+    draw.text((58,9),"年度建设规划：从数据管理到可持续的业务协作与智能系统集成",
+              font=heading,fill="#101828")
     draw.text((89,305),"Editable text 42",font=ImageFont.truetype(str(FONT_PATH),32),fill="#102240")
     yy,xx=np.indices((220,290))
     gradient=np.stack((40+(xx+yy)%103,75+xx%160,120+yy%120),axis=2).astype(np.uint8)
@@ -78,6 +82,7 @@ class ConversionTest(unittest.TestCase):
                               " ".join(n.text or "" for n in one.findall(".//a:t",NS)))
                 text="".join(n.text or "" for n in two.findall(".//a:t",NS))
                 self.assertIn("中文测试",text)
+                self.assertIn("智能系统集成",text)
                 self.assertIn("42",text)
                 self.assertTrue(two.findall(".//p:pic",NS))
                 self.assertIsNotNone(two.find(".//p:bg/p:bgPr/a:solidFill",NS))

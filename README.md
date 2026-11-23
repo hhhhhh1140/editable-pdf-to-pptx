@@ -9,7 +9,7 @@
 
 ## 安装
 
-下载或克隆此仓库，在项目目录运行。推荐用 Python 3.12 的虚拟环境。
+在 [Releases](../../releases) 下载 `.whl` 安装包，或下载仓库源码。推荐用 Python 3.12 的虚拟环境。
 
 ```bash
 python -m venv .venv
@@ -29,7 +29,7 @@ macOS 和 Linux：
 .venv/bin/python -m editable_pdf "source.pdf" -o "editable.pptx"
 ```
 
-如果 Python 的命令是 `py -3.12` 或 `python3`，用它创建虚拟环境。首次安装需要下载依赖。安装后可以离线转换。GitHub 主机常见架构的安装验证见 [Actions](../../actions)。
+使用 Release 安装包时，把 `pip install .` 改为 `pip install "下载的安装包.whl"`。如果 Python 的命令是 `py -3.12` 或 `python3`，用它创建虚拟环境。首次安装需要下载依赖。安装后可以离线转换。GitHub 主机常见架构的安装验证见 [Actions](../../actions)。
 
 ## 用法
 

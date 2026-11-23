@@ -125,16 +125,21 @@ class Recognizer:
             from rapidocr import RapidOCR
             onnxruntime.disable_telemetry_events()
             self.engine=RapidOCR(params={
+                "Global.log_level": "warning",
                 "EngineConfig.onnxruntime.intra_op_num_threads": 2,
                 "EngineConfig.onnxruntime.inter_op_num_threads": 1,
             })
         data=cv2.cvtColor(np.asarray(page.image),cv2.COLOR_RGB2BGR)
-        result=self.engine(data)
+        # PDFium and EXIF already orient pages. RapidOCR's line classifier can
+        # flip long, upright slide titles independently of the rest of the page.
+        result=self.engine(data,use_cls=False)
         if result.boxes is None:
             return page.text if mode=="auto" else []
         lines=list(page.text if mode=="auto" else [])
         width,height=page.image.size
         for quad,text,confidence in zip(result.boxes,result.txts,result.scores,strict=True):
+            if not any(character.isalnum() for character in text):
+                continue
             left,top=map(int,np.floor(quad.min(axis=0)))
             right,bottom=map(int,np.ceil(quad.max(axis=0)))
             rect=(max(0,left),max(0,top),min(width,right),min(height,bottom))

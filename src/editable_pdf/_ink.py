@@ -50,6 +50,9 @@ def detect_ink(image, box):
     above = gray[:max(1, top-y0)]
     below = gray[min(bottom-y0, len(gray)-1):]
     reference = np.median(np.concatenate([above.ravel(), below.ravel()]))
+    inside_reference = np.median(core)
+    if abs(reference - inside_reference) > 36:
+        reference = inside_reference
     low, high = np.percentile(core, [9, 91])
     light_ink = high - reference > (reference - low) * 1.12
     bg = vertical_estimate(crop, top-y0, bottom-y0, light_ink)
