@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "editable-pdf-to-pptx"
+version = "0.1.0"
+description = "Local, cross-platform PDF and image reconstruction as editable PowerPoint objects"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "numpy>=2,<3",
+  "Pillow>=12,<14",
+  "pypdfium2>=5.13,<6",
+  "python-pptx==1.0.2",
+  "opencv-python-headless>=4.11,<6",
+  "rapidocr==3.10.0",
+  "onnxruntime>=1.21,<2",
+]
+
+[project.scripts]
+pdf-to-pptx = "editable_pdf.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+editable_pdf = ["assets/*.ttf", "assets/*.txt"]
